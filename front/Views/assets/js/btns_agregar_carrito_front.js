@@ -9,19 +9,21 @@ btnsAgregarAlCarritoFront.forEach((el) => {
             nombre: e.target.getAttribute('data-nombre'),
             imagen:e.target.getAttribute('data-imagen'),
             precio_venta: e.target.getAttribute('data-precio-venta'),
-            cantidad:1
+            cantidad:1,
+            action:'agregar_producto'
         };
         
         //console.log(producto);
 
-        fetch('./front/ajax/Agregar_carrito.php',{
+        fetch('./front/ajax/Carrito_ajax.php',{
             method:'post',
-            headers:{'Content-type':'application/x-www-form-urlencoded'},
-            body:new URLSearchParams(producto)
+            headers:{'Content-type':'application/json'},
+            body:JSON.stringify(producto)
         })
         .then(res => res.json())
-        .then(res=>{            
-            window.location.reload();          
+        .then(res=>{          
+            console.log(res);  
+            //window.location.reload();          
                       
             
         })
