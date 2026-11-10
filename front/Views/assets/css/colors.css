@@ -1,0 +1,18 @@
+.bg-primary {
+    background-color:#3c8dbc !important;
+}
+
+
+.bg-orange{
+    background-color: orange;
+    color:white !important;
+}
+
+.bg-green2{
+    border:1px solid #cbcbcb;
+    background:red;
+    background-color: #3adf11;
+    
+    color:white !important;
+    
+}

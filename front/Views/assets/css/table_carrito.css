@@ -1,0 +1,64 @@
+/* tabla carrito*/
+#container_carrito table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+#container_carrito th {
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: smaller;
+  width: auto;
+}
+#container_carrito td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: smaller;
+  padding: 4px 2px 2px;
+}
+
+#btn_menos {
+  color: #fff;
+  border: none;
+  background-color: #999;
+  padding: 0px 5px 0px;
+  border-radius: 3px;
+  &:hover {
+    background-color: #555;
+  }
+}
+
+#btn_mas {
+  color: #fff;
+  border: none;
+  background-color: #999;
+  padding: 0px 5px 0px;
+  border-radius: 3px;
+  &:hover {
+    background-color: #555;
+  }
+}
+
+#container_carrito #action {
+  text-align: center;
+  width: auto;
+  text-align: center;
+}
+
+
+@media (min-width:768px){
+  #container_carrito td {
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: large;
+  padding: 4px 2px 2px;
+}
+
+}

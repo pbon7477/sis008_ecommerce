@@ -1,0 +1,15 @@
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr {
+  margin: 0px;
+  padding: 0px;
+}
+
+.active-section {
+  background: #61666e;
+}

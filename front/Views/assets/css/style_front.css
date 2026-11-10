@@ -1,0 +1,271 @@
+html {
+  scroll-behavior:smooth;
+
+}
+
+
+
+body {
+  background: #e9ecef;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  width: 100%;
+}
+
+.container-front {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
+}
+
+footer {
+  background-color: rgb(224, 224, 224);
+  margin: 0;
+  padding: 4px 20px;
+}
+
+/*  -- select categoria */
+.select-categoria {
+  border: 1px solid rgba(128, 128, 128, 0.447);
+  border-radius: 3px;
+  padding: 4px;
+}
+
+/* //ESTILO PARA LAS MINIATURAS DEL CATALOGO */
+
+.img-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.img-container .icono-check {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 25px;
+  color: green;
+}
+
+#badgeProductos {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.img-size-40 {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.user_state_label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px;
+}
+
+.bg-whatsapp {
+  background-color: #25d366;
+}
+
+.bg-alert-whatsapp {
+  background-color: #67cfe7;
+  border: 1px solid green;
+  border-radius: 6px;
+}
+
+/* CIRCULO CHECK */
+.check_circle_confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+
+  border-radius: 50px;
+}
+
+/* prefijo telefono*/
+.prefijo-telefono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px 0px 0px 4px;
+  background: #dcdcdc;
+  color: #2e2e2e;
+  width: 40px;
+}
+
+/* Cajas bajo el carousel*/
+.box-icon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+  &:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.box-sub-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  padding: 8px;
+  background: linear-gradient(120deg, #f4f4f4, #f2f2f2);
+  box-sizing: border-box;
+  font-size: 25px;
+}
+
+.sub-icon-blue {
+  color: rgb(8, 127, 230);
+}
+
+.sub-icon-green {
+  color: rgb(14, 218, 14);
+}
+
+.sub-icon-calipso {
+  color: rgb(9, 184, 200);
+}
+
+.sub-icon-yellow {
+  color: rgb(255, 226, 34);
+}
+
+/* label categoria en front*/
+
+.container-categoria-label-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.categoria-label-button {
+  padding: 6px 19px;
+  border: 1px solid rgba(42, 118, 181, 0.273);
+  border-radius: 30px;
+  background: rgb(242, 242, 242);
+  color: rgb(34, 99, 212);
+
+  transition: 0.4s;
+  &:hover {
+    background: rgb(34, 99, 212);
+    color: #fff;
+
+    transition: 0.4s;
+  }
+}
+
+/* botones paginacion producto*/
+.pagination .page-item .page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d2d2d2;
+  height: 50px;
+  width: 50px;
+}
+
+/*Encabezado de secciones*/
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background: #fff; */
+  background: #fcff9b;
+
+  padding: 10px 15px 15px;
+  margin-bottom: 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(10px, 0, 0, 0.14);
+  min-height: 90px;
+}
+
+.product_name {
+  color: #444;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bolder;
+}
+
+.product-price {
+  color: #000;
+}
+
+/*footer*/
+footer {
+  background-color: #222;
+  color: #666;
+  padding: 50px 25px 10px;
+}
+#footer-links {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0px;
+}
+
+#footer-links a {
+  color: #a2aec2;
+  &:hover {
+    color: #e9ecef;
+  }
+}
+
+.icons_rrss_box {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 6px 0px 8px;
+}
+
+.icon_rrss {
+  max-width: 32px;
+ 
+  
+}
+
+@media only screen and (min-width: 680px) {
+  .check_circle_confirm {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+}

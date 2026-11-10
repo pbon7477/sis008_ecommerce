@@ -1,0 +1,79 @@
+.entrar-derecha {
+  animation: bounceInRight;
+  animation-duration: 2s;
+}
+
+.entrar-fade-in {
+  animation: fadeIn;
+  animation-duration: 2s;
+}
+
+/* parpadeo para el icono del carrito */
+
+@keyframes parpadeo {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.parpadeo-dos-veces {
+  animation: parpadeo 0.5s ease-in-out 1;
+}
+
+/*icon resdes sociales*/
+
+.box_icons_rrss {
+  display: flex;
+  flex-direction: row;
+  padding: 4px 0px 4px;
+  gap: 6px;
+  width: auto;
+  box-sizing: border-box;
+}
+
+.icon_facebook {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../images/rrss/facebook_grey.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: 0.2s ease;
+  &:hover {
+    background-image: url("../images/rrss/facebook.png");
+
+    transition: 0.2s ease-out;
+  }
+}
+.icon_instagram {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../images/rrss/instagram_grey.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: 0.2s ease;
+  
+
+  &:hover {
+    background-image: url("../images/rrss/instagram.png");
+    transition: 0.2s ease-out;
+  }
+}
+.icon_wathsapp {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../images/rrss/wathsapp_grey.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: 0.2s ease;
+  &:hover {
+    background-image: url("../images/rrss/wathsapp.png");
+    transition: 0.2s ease-out;
+  }
+}

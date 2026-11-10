@@ -1,0 +1,1 @@
+url = "./front/ajax/Resumen.php";
