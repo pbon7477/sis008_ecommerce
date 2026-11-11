@@ -1,45 +1,61 @@
 $(document).ready(function () {
   //leer_carrito y llenar listado en el nav(cantidad en el icono)
-  $.ajax({
-    type: "post",
-    url: "./front/ajax/Leer_carrito.php",
-    dataType: "json",
-    success: function (response) {
-      llenar_carrito(response);
-    },
-  });
+
+  fetch("./front/ajax/Carrito_ajax.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "leer-carrito",
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      //console.log(res);
+      llenar_carrito_icono(res);
+    });
 
   // TABLA CARRITO
   //leer_carrito y llenar tabla
-  $.ajax({
-    type: "post",
-    url: "./front/ajax/Leer_carrito.php",
-    dataType: "json",
-    success: function (response) {
-      llenar_tabla_carrito(response);
-    },
-  });
+  fetch("./front/ajax/Carrito_ajax.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "leer-carrito",
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      llenar_tabla_carrito(res);
+    });
 
   //BOTON PARA INCREMENTAR O DECREMENTAR PRODUCTOS DEL CARRITO
+
   $(document).on("click", "#btn_mas, #btn_menos", function (e) {
     e.preventDefault();
     let id = $(this).data("id");
     let action = $(this).data("action");
 
-    $.ajax({
-      type: "post",
-      url: "./front/ajax/Cambiar_cantidad_producto.php",
-      data: { id: id, action: action },
-      dataType: "json",
-      success: function (response) {
-        llenar_carrito(response);
-        llenar_tabla_carrito(response);
-      },
-    });
+    //console.log({id,action});
+
+    fetch("./front/ajax/Carrito_ajax.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: id,
+        action: action,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        llenar_carrito_icono(res);
+        llenar_tabla_carrito(res);
+      });
   });
 
   //Boton para agregar productos al carrito
   //(Apunta al modulo detalle de producto)
+
   $("#btnAgregarAlCarrito").click(function (e) {
     e.preventDefault();
     let id = $(this).data("id");
@@ -54,9 +70,21 @@ $(document).ready(function () {
       imagen: imagen,
       cantidad: cantidad,
       precio_venta: precio_venta,
+      action: "agregar-producto",
     };
 
-    $.ajax({
+    fetch("./front/ajax/Carrito_ajax.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(producto),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        history.back();
+      });
+
+    /*    $.ajax({
       type: "post",
       url: "./front/ajax/Agregar_carrito.php",
       data: producto,
@@ -64,59 +92,68 @@ $(document).ready(function () {
       success: function (response) {
         llenar_carrito(response);
       },
-    });
+    }); */
   });
 
-  //BOTON BORRAR CARRITO (En el listado en el navbar)
-  $(document).on("click", "#borrar_carrito", function (e) {
+  //BOTON BORRAR CARRITO (VACIAR) (En el listado en el navbar)
+  $(document).on("click", "#btn-vaciar-carrito", function (e) {
     e.preventDefault();
 
     Swal.fire({
-      title: "Borrar carrito",
-      text: "¿Esta seguro que desea borrar el carrito? ",
-      icon: "info",
-      confirmButton: true,
+      title: "Vaciar carrito",
+      html: "¿Seguro que desea vaciar el contenido del carrito?<br><small><b>Se quitaran todos los productos seleccionados</b></small> ",
+      icon: "warning",
       confirmButtonText: "Si, vaciar",
-      confirmButtonColor: "#d33",
+      confirmButtonColor: "#333",
       showCancelButton: true,
       cancelButtonText: "No, Cancelar",
-      canclButtonColor: "#3085d6",
+      cancelButtonColor: "#3085d6",
     }).then((result) => {
       if (result.isConfirmed) {
-        $.ajax({
-          type: "post",
-          url: "./front/ajax/Borrar_carrito.php",
-          dataType: "json",
-          success: function (response) {
-            llenar_carrito(response);
+        fetch("./front/ajax/Carrito_ajax.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "vaciar-carrito",
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
             window.location.reload();
-          },
-        });
+          });
       }
     });
   });
-});
 
-//BOTON ELIMINAR PRODUCTO DEL CARRITO
-//(En la tabla del carrito)
-$(document).on("click", "#btn_borrar_producto", function (e) {
-  e.preventDefault();
-  let id = $(this).data("id");
+  //BOTON ELIMINAR PRODUCTO DEL CARRITO
+  //(En la tabla del carrito)
 
-  $.ajax({
-    type: "post",
-    url: "./front/ajax/Borrar_producto_carrito.php",
-    data: { id: id },
-    dataType: "json",
-    success: function (response) {
-      llenar_carrito(response);
-      llenar_tabla_carrito(response);
-    },
+  $(document).on("click", "#btn_borrar_producto", function (e) {
+    e.preventDefault();
+    let id = $(this).data("id");
+
+    fetch("./front/ajax/Carrito_ajax.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: id,
+        action: "borrar-producto",
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.status == "success") {
+          llenar_carrito_icono(res.carrito);
+          llenar_tabla_carrito(res.carrito);
+        }
+      });
   });
 });
 
 //FUNCION PARA LLENAR EL LISTADO DEL CARRITO EN EL NAVBAR
-function llenar_carrito(response) {
+function llenar_carrito_icono(response) {
   //Obtenemos y cargamos el numero de la cantidad de productos agregados(Numero en el carrito )
   let cantidad_productos = Object.keys(response).length;
 
@@ -124,7 +161,6 @@ function llenar_carrito(response) {
   if (cantidad_productos > 0) {
     $("#badgeProductos").text(cantidad_productos);
     $("#badgeProductos_2").text(cantidad_productos);
-    
   } else {
     $("#badgeProductos").text("");
     $("#badgeProductos_2").text("");
@@ -134,21 +170,25 @@ function llenar_carrito(response) {
 //FUNCION PARA LLENA LA TABLA DEL CARRITO
 function llenar_tabla_carrito(response) {
   if (response.length > 0) {
-    let TOTAL = 0;
+    
+      let TOTAL = 0;
 
-    $("#tabla_carrito_body").text("");
+    
+      $("#tabla_carrito_body").text("");
 
-    response.forEach((prod,index) => {
-      let total_precio = prod.cantidad * prod.precio_venta;
-      TOTAL = TOTAL + total_precio;
-      $("#tabla_carrito_body").append(`
+      response.forEach((prod, index) => {
+        let total_precio = prod.cantidad * prod.precio_venta;
+        TOTAL = TOTAL + total_precio;
+
+        $("#btn-vaciar-carrito").show();
+        $("#tabla_carrito_body").append(`
                 <tr>
                 <td class="text-center">${++index}</td>
                  <td class="text-center" > <img src="./admin/app/Views/assets/images_productos/${prod.imagen}" alt="" class="img-size-50  img-thumbnail" /> </td>
                  <td class="bg-light" style="width:1%; white-space:nowrap; padding-right:10px;">${prod.nombre}</td>
                  <td class="bg-light " style="width:1%; white-space:nowrap; padding-right:20px;"><b>$${prod.precio_venta}</b></td>
                  <td class="bg-light text-left" style="width:1%;" >
-
+                 
                  <div class="d-flex justify-content-start">
 
                  <div class="d-flex justify-content-evenly ">
@@ -169,23 +209,26 @@ function llenar_tabla_carrito(response) {
                 
                 </tr>
                 `);
-    });
+      });
 
-    $("#tabla_carrito_body").append(`
+      $("#tabla_carrito_body").append(`
                 <tr class="">
-                    <td class=" p-2 text-right" colspan="4" ><h5><b>Total:</b></h5></td>
+                    <td class=" p-2 text-right" colspan="5" ><h5><b>Total:</b></h5></td>
                     <td class=" p-2 text-left border "><h5><b>$${TOTAL}</b></h5></td>
                     <td></td>
-                </tr>    
-            `);
+                    </tr>    
+                    `);
+    
   } else {
+    $("#btn-vaciar-carrito").hide();
+
     $("#tabla_carrito").text(``);
     $("#tabla_carrito").append(`
-                    <div class="text-center ">
-                     <p>No hay productos agregados al carrito.</p>                    
-                     <a href="index.php?view=productos" class="btn btn-sm btn-primary mt-3">Ir al listado de productos</a>
-                    </div>
-                    `);
+      <div class="text-center ">
+      <p>No hay productos agregados al carrito.</p>                    
+      <a href="index.php?view=productos" class="btn btn-sm btn-primary mt-3">Ir al listado de productos</a>
+      </div>
+      `);
 
     $("#btns_volver_a_productos_y_datos_cliente").text("");
   }

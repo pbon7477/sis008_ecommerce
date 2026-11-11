@@ -109,7 +109,13 @@
             function check_producto_seleccionado_carrito_actual() {
                 let resultado = null;
 
-                fetch('./front/ajax/Leer_carrito.php')
+                fetch('./front/ajax/Carrito_ajax.php',{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        action:'leer-carrito'
+                    })
+                })
                     .then(res => res.json())
                     .then(res => {
                         let productos_en_carrito = res;

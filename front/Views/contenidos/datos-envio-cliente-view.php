@@ -256,12 +256,20 @@ if (isset($_SESSION['destinatario'])) { ?>
 </script>
 
 
-<script>
+<script>  
     function check_carrito_vacio() {
 
-        fetch("<?= SERVER_URL; ?>front/ajax/leer_carrito.php")
+        fetch("<?= SERVER_URL; ?>front/ajax/Carrito_ajax.php",{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                action:'leer-carrito'
+            })
+
+        })
             .then(res => res.json())
             .then(res => {
+                console.log({contenido_actual: res, longitud:res.length});
                 if (res == false) {
 
                     let btn_guardar_cliente_y_destinatario = document.querySelector('#guardar_cliente_y_destinatario');
@@ -273,13 +281,15 @@ if (isset($_SESSION['destinatario'])) { ?>
                             title: "Atención",
                             html: "<p>El carrito no tiene productos.<br>Debe seleccionar al menos un producto para poder continuar.</p>",
                             icon: "warning",
-                            confirmButtonText: 'Entendido, ir a Productos',
-                            confirmButtonColor: '#228b22'
+                            confirmButtonText: 'Entendido',
+                            confirmButtonColor: '#333'
                         })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = "<?= SERVER_URL; ?>";
+                                window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
                             }
+                            window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
+                            
                         })
                 }
             })

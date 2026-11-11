@@ -103,8 +103,9 @@
           sessionStorage.setItem('id_cliente', res.cliente_data.id); 
           sessionStorage.setItem('nombre_cliente', res.cliente_data.nombre); 
           sessionStorage.setItem('email_cliente', res.cliente_data.email); 
-          window.location.href='index.php?view=productos';  
+          //window.location.href='index.php?view=productos';           
           
+          window.history.back();
 
           
           

@@ -4,7 +4,7 @@ if (!isset($peticion_ajax)) {
     $peticion_ajax = false;
 }
 
-define('SERVER_URL', 'http://localhost/sis006/');
+define('SERVER_URL', 'http://localhost/sis008/');
 //define( 'SERVER_URL', 'http://localhost:3000/' );
 define('COMPANY', 'Mi Tienda');
 

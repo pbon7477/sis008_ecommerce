@@ -16,7 +16,12 @@
     <div class="col-md-12 ">
         <div class="card">
             <div class="card-header">
-                <h5>Mis Productos</h5>
+                <div class="d-flex justify-content-between">
+                    <h5>Mis Productos</h5>
+                    <span>
+                        <button class="btn btn-sm btn-outline-secondary" id="btn-vaciar-carrito"><i class="fa fa-trash mr-2"></i>Vaciar carrito</button>
+                    </span>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive " id="container_carrito">

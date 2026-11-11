@@ -11,4 +11,5 @@
 <script src="front/Views/assets/js/btns_agregar_carrito_front.js"></script>
 
 
+
 <script src="front/Views/assets/js/datatables.min.js"></script>
