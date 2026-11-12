@@ -1,7 +1,10 @@
 //BOTON PARA HACER PEDIDO (Pasarela view)
 (function () {
   let btn_pedido = document.querySelector("#btn_confirmar_pedido");  
-  btn_pedido.addEventListener("click", confirmar_pedido);
+  btn_pedido.addEventListener("click", (e)=>{
+    e.preventDefault();
+    confirmar_pedido();
+  });
 
   //Leemos lo que tenga el carrito
   function confirmar_pedido() {
@@ -10,7 +13,7 @@
 
     Swal.fire({
       title: "Confirmar pedido",
-      text: "Al confirmar, se registrara su pedido y se abrirá WhatsApp para enviarlo",
+      html: "Se registrara su pedido y se abrirá WhatsApp para enviarlo",
       icon: "success",
       showConfirmButton: true,
       confirmButtonText: "Confirmar",
@@ -22,15 +25,16 @@
     .then((result) => {
       
       if (result.isConfirmed) {
-        fetch("./front/ajax/pedido_create.php", {
-          method: "post",
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
+        fetch("./front/ajax/Pedidos_ajax.php", {
+          method: 'POST',
+          headers: { 'Content-type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams({
-            action: "pedido_create",
+            action: "pedido-create",
           }),
         })
           .then((res) => res.json())
           .then((res) => {
+          
             
             btn_pedido.innerText = "Listo, pedido ingresado";
             document.querySelector('#check_accept').setAttribute('disabled', true);        

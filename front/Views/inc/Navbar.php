@@ -152,7 +152,7 @@ if (isset($_GET['view'])) {
 
                                 <?php if (isset($_SESSION['nombre_cliente'])) { ?>
 
-                                    <button class="dropdown-item" id="btn_cerrar_sesion"><i class="fas fa-door-open text-primary mr-2"></i>Cerrar sesión</button>
+                                    <button class="dropdown-item" id="btn_cerrar_sesion"><i class="fas fa-door-open text-dark mr-2"></i>Cerrar sesión</button>
 
 
 

@@ -56,14 +56,14 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
 
 <div class="alert alert-success p-3 border text-center ">
 
-    <h4><i class="fas fa-comment mr-2 "></i>El método de pago y la entrega se coordinan directamente por <u><i class="fab fa-whatsapp mx-1"></i>WhatsApp</u>
-    </h4>
+    <p><i class="fas fa-comment mr-2 "></i>El método de pago y la entrega se coordinan directamente por <u><i class="fab fa-whatsapp mx-1"></i>WhatsApp</u>
+    </p>
 </div>
 <i class="fa fa-whatsapp fa-2x"></i>
 
 <?php if (isset($_SESSION['id_cliente'])) {  ?>
 
-    <div class="row">
+    <div class="row" id="row-cliente-y-destinatario">
 
         <div class="col-md-6">
 
@@ -120,7 +120,7 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
     </div>
 
 
-    <div class="row">
+    <div class="row" id="row-checkbox-accept">
         <div class="col-md-12 mt-2">
 
             <div class="form-check mt-3 ">
@@ -138,9 +138,9 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
 
         </div>
     </div>
-    <hr>
 
-    <div class="row">
+    <hr>
+    <div class="row" id="row-btns-volver-o-confirmar">
 
         <div class="col-md-12 mb-5 ">
             <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
@@ -191,12 +191,25 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
 <script>
     function check_carrito_vacio() {
 
-        fetch("<?= SERVER_URL; ?>front/ajax/leer_carrito.php")
+        fetch("<?= SERVER_URL; ?>front/ajax/Carrito_ajax.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'check-carrito'
+                })
+
+            })
             .then(res => res.json())
             .then(res => {
-                if (res == false) {
+                console.log(res);
+                if (res.empty) {
                     document.querySelector('#check_accept').setAttribute('disabled', true);
                     document.querySelector('#btn_confirmar_pedido').setAttribute('disabled', true);
+                    document.querySelector('#row-cliente-y-destinatario').innerText = '';
+                    document.querySelector('#row-checkbox-accept').innerText = '';
+                    document.querySelector('#row-btns-volver-o-confirmar').innerText = '';
                     Swal.fire({
                             title: "Atención",
                             html: "<p>El carrito no tiene productos.<br>Debe seleccionar al menos un producto para poder continuar.</p>",
@@ -206,8 +219,9 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
                         })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = "<?= SERVER_URL; ?>";
+                                window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
                             }
+                            window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
                         })
                 }
             })

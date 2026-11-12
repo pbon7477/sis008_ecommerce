@@ -115,7 +115,7 @@
             html: `${res.message}`,
             icon: `${res.icon}`,
             confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#2994cd',
+            confirmButtonColor: '#333',
           }).then((result) => {
             if (result.isConfirmed) {
               window.location.href = '<?= SERVER_URL; ?>index.php?view=login-cli';

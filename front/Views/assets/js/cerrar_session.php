@@ -12,7 +12,7 @@ if(isset($_SESSION['id_cliente'])) { ?>
       html: "<p>¿Esta seguro que deseaa cerrar tu sesion?</p>",
       icon: "question",
       showConfirmButton: true,
-      confirmButtonColor: "#2994cd",
+      confirmButtonColor: "#333",
       confirmButtonText: "Sí, cerrar sesión",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
@@ -36,7 +36,7 @@ if(isset($_SESSION['id_cliente'])) { ?>
               sessionStorage.removeItem("nombre_cliente");
               sessionStorage.removeItem("email_cliente");
 
-              window.location.reload();
+              window.location='<?= SERVER_URL; ?>';
             }
           });
       }

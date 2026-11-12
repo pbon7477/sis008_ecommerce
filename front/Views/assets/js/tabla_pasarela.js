@@ -1,8 +1,16 @@
-let url = "./front/ajax/Leer_carrito.php";
- 
-fetch(url, { method: "post" })
+let url = "./front/ajax/Carrito_ajax.php";
+
+fetch(url, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    action: "leer-carrito",
+  }),
+})
   .then((data) => data.json())
   .then((data) => {
+    console.log(data);
+
     llenar_tabla_pasarela(data);
   });
 
@@ -19,9 +27,9 @@ function llenar_tabla_pasarela(data) {
       TOTAL = TOTAL + total_prod;
 
       tabla_pasarela_body.innerHTML += `<tr>
-      <td align="center">${++index}</td>
+            <td align="center">${++index}</td>            
             <td class="bg-white" align="center" ><img src="./admin/app/Views/assets/images_productos/${el.imagen}" alt="" class="img-size-50  img-thumbnail" /></td>
-            <td class="bg-white" align="left"  >${el.nombre} (${el.id})</td>
+            <td class="bg-white" align="left"  >${el.nombre} </td>
             <td class="bg-white" align="center" >${el.cantidad}</td>
             <td class="bg-white" align="center" ><b>$${precio}</b></td>
             <td class="bg-white" align="center" ><b>$${total_prod}</b></td>
@@ -45,4 +53,3 @@ function llenar_tabla_pasarela(data) {
         `;
   }
 }
-

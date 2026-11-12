@@ -16,7 +16,7 @@ if (isset($_SESSION['id_cliente'])) {
             <div class="header-section">
                 <div>
                     <h5><i class="fa fa-id-card sub-icon-blue mr-2"></i> Datos de envio</h5>
-                    <p>Indique dónde desea recibir su pedido</p>
+                    <p>Indique quien y dónde desea recibir su pedido</p>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@ if (isset($_SESSION['id_cliente'])) {
 
 
     <form action="./front/ajax/Clientes_ajax.php" method="post" id="form_update_cliente_y_destinatario">
-        <div class="row">
+        <div class="row"> 
             <div class="col-md-6 ">
                 <div class="card">
                     <div class="card-header bg-light">
