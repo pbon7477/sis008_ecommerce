@@ -28,8 +28,8 @@ $(document).ready(function () {
       llenar_tabla_carrito(res);
     });
 
+    
   //BOTON PARA INCREMENTAR O DECREMENTAR PRODUCTOS DEL CARRITO
-
   $(document).on("click", "#btn_mas, #btn_menos", function (e) {
     e.preventDefault();
     let id = $(this).data("id");
@@ -84,15 +84,7 @@ $(document).ready(function () {
         history.back();
       });
 
-    /*    $.ajax({
-      type: "post",
-      url: "./front/ajax/Agregar_carrito.php",
-      data: producto,
-      dataType: "json",
-      success: function (response) {
-        llenar_carrito(response);
-      },
-    }); */
+
   });
 
   //BOTON BORRAR CARRITO (VACIAR) (En el listado en el navbar)
@@ -126,12 +118,15 @@ $(document).ready(function () {
     });
   });
 
+
   //BOTON ELIMINAR PRODUCTO DEL CARRITO
   //(En la tabla del carrito)
 
   $(document).on("click", "#btn_borrar_producto", function (e) {
     e.preventDefault();
     let id = $(this).data("id");
+    //console.log(id);
+   
 
     fetch("./front/ajax/Carrito_ajax.php", {
       method: "POST",
@@ -143,12 +138,15 @@ $(document).ready(function () {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res.status == "success") {
+        
+        if (res.status == "success") {          
           llenar_carrito_icono(res.carrito);
           llenar_tabla_carrito(res.carrito);
+        }else{          
+          window.location.reload();
         }
-      });
+      })
+      .catch((error)=>console.log(error))
   });
 });
 

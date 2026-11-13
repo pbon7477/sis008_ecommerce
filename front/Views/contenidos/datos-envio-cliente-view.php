@@ -26,10 +26,10 @@ if (isset($_SESSION['id_cliente'])) {
 
 
     <form action="./front/ajax/Clientes_ajax.php" method="post" id="form_update_cliente_y_destinatario">
-        <div class="row"> 
-            <div class="col-md-6 ">
+        <div class="row">
+            <div class="col-lg-6 ">
                 <div class="card">
-                    <div class="card-header bg-light">
+                    <div class="card-header bg-secondary">
                         <h5><i class="fa fa-user mr-1"></i>Datos del cliente</h5>
                         <input type="hidden" name="id_cliente" value="<?= $cliente['id']; ?>">
                         <input type="hidden" name="guardar_cliente_y_destinatario" value="guardar_cliente_y_destinatario">
@@ -69,9 +69,9 @@ if (isset($_SESSION['id_cliente'])) {
                 </div>
             </div>
 
-            <div class="col-md-6 ">
+            <div class="col-lg-6 ">
                 <div class="card">
-                    <div class="card-header bg-light">
+                    <div class="card-header bg-secondary">
                         <h5><i class="fa fa-user-plus mr-1"></i> Datos de quien recibe</h5>
                     </div>
                     <div class="card-body bg-light">
@@ -79,7 +79,7 @@ if (isset($_SESSION['id_cliente'])) {
 
                         <div class="form-check float-right">
                             <input type="checkbox" class="form-check-input" name="agregar_datos_usuario_a_cliente" id="agregar_datos_usuario_a_cliente">
-                            <label for="agregar_datos_usuario_a_cliente">Agregar mis datos(El pedido lo recibiré yo):</label>
+                            <label for="agregar_datos_usuario_a_cliente">Agregar mis datos(El pedido lo recibiré yo)</label>
                         </div>
 
 
@@ -256,20 +256,25 @@ if (isset($_SESSION['destinatario'])) { ?>
 </script>
 
 
-<script>  
+<script>
     function check_carrito_vacio() {
 
-        fetch("<?= SERVER_URL; ?>front/ajax/Carrito_ajax.php",{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                action:'leer-carrito'
-            })
+        fetch("<?= SERVER_URL; ?>front/ajax/Carrito_ajax.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'leer-carrito'
+                })
 
-        })
+            })
             .then(res => res.json())
             .then(res => {
-                console.log({contenido_actual: res, longitud:res.length});
+                console.log({
+                    contenido_actual: res,
+                    longitud: res.length
+                });
                 if (res == false) {
 
                     let btn_guardar_cliente_y_destinatario = document.querySelector('#guardar_cliente_y_destinatario');
@@ -289,7 +294,7 @@ if (isset($_SESSION['destinatario'])) { ?>
                                 window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
                             }
                             window.location.href = "<?= SERVER_URL; ?>index.php?view=productos";
-                            
+
                         })
                 }
             })

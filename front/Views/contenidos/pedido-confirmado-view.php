@@ -39,7 +39,7 @@ if (!isset($_SESSION['codigo_pedido'])) {
     <div class="col-md-6 mx-auto p-2 ">
 
         <div class="alert alert-default-info mb-2 text-center border-info shadow">
-            <b><?= $_SESSION['nombre_cliente']; ?></b>, guardamos su pedido.<br>En unos minutos <b><?= COMPANY; ?></b> te va a escribir por WhatsApp para coordinar el <b>pago</b> y la <b>entrega</b>.
+            <b><?= ucfirst($_SESSION['nombre_cliente']); ?></b>, guardamos su pedido.<br>En unos minutos <b><?= COMPANY; ?></b> te va a escribir por WhatsApp para coordinar el <b>pago</b> y la <b>entrega</b>.
         </div>
 
 

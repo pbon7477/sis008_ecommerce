@@ -1,7 +1,7 @@
 <?php 
 
 define( 'SERVER_URL', 'https://mitienda.page.gd/' );
-define( 'COMPANY', 'sis006 Mi Tienda' );
+define( 'COMPANY', 'sis008 Mi Tienda' );
 
 define('MONEDA','$');
 

@@ -188,6 +188,8 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
 <script src="./front/Views/assets/js/tabla_pasarela.js"></script>
 <script src="./front/Views/assets/js/confirmar_pedido.js"></script>
 
+
+
 <script>
     function check_carrito_vacio() {
 
@@ -203,7 +205,7 @@ if (!isset($_SESSION['id_cliente'])  || $_SESSION['destinatario']['nombre'] == '
             })
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res.empty) {
                     document.querySelector('#check_accept').setAttribute('disabled', true);
                     document.querySelector('#btn_confirmar_pedido').setAttribute('disabled', true);

@@ -97,4 +97,3 @@ $categorias = $ProductosControler->getCategoriasProductos();
 
 
 <script src="<?= SERVER_URL ?>front/Views/assets/js/jquery.min.js"></script>
-<script src="<?= SERVER_URL ?>front/Views/assets/js/carousel.js"></script>

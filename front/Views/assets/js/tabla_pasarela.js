@@ -9,7 +9,7 @@ fetch(url, {
 })
   .then((data) => data.json())
   .then((data) => {
-    console.log(data);
+   //console.log(data);
 
     llenar_tabla_pasarela(data);
   });
@@ -38,7 +38,7 @@ function llenar_tabla_pasarela(data) {
 
     tabla_pasarela_body.innerHTML += `
         <tr>
-        <td class="bg-white p-2 text-right" colspan="4" ><h5><b>Total:</b></h5></td>
+        <td class="bg-white p-2 text-right" colspan="5" ><h5><b>Total:</b></h5></td>
         <td class="bg-white p-2 text-center" ><h5><b> $${TOTAL}</b></h5></td>
         <input type="hidden" value="${TOTAL}" name="total" />
         </tr>

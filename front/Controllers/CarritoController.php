@@ -1,63 +1,101 @@
 <?php
 
-class CarritoController
+require_once(__DIR__ . '/../Models/CarritoModel.php');
+
+class CarritoController extends CarritoModel
 {
 
-    public function agregar_producto(array $data)
-    {
+    public function agregar_producto(array $form_data)    {
 
-        //Si no se ha creado la session 'carrito':
-        if (!isset($_SESSION['carrito'])) {
+        $response = [];
 
-            $producto = [
-                'id' => $data['id'],
-                'nombre' => $data['nombre'],
-                'imagen' => $data['imagen'],
-                'cantidad' => $data['cantidad'],
-                'precio_venta' => $data['precio_venta']
-            ];
+        //Recibimos solo el 'id' y 'cantidad'
+        $id = MainModel::limpiar_cadena($form_data['id']);
+        $cantidad = MainModel::limpiar_cadena($form_data['cantidad']);
 
-            $_SESSION['carrito'][0] = $producto;
+        //Pedir los datos del producto a la BBDD
+        $res = CarritoModel::get_producto($id);
 
+
+        if ($res['status'] == 'error') {
             $response = [
-                'status' => 'success',
-                'message' => 'Producto agregado al carrito',
-                'carrito' => $_SESSION['carrito']
+                'status' => 'error',
+                'message' => $res['message'],
+                'error' => $res['error']
             ];
+
+            return $response;
+            
+            
+
+            
         } else {
-            //Si ya se  ha creado la session 'carrito':
-            //Buscamos que el id del producto entrante no exista
 
-            $ids_productos = array_column($_SESSION['carrito'], 'id');
 
-            if (in_array($data['id'], $ids_productos)) {
-                $response = [
-                    'status' => 'error',
-                    'message' => 'El producto ya existe en el carrito'
-                ];
-            } else {
-                //Si no existe, lo agrega
 
-                $numero_productos = count($_SESSION['carrito']);
+            $data = $res['producto'];
+
+
+
+
+            //Si no se ha creado la session 'carrito':
+            if (!isset($_SESSION['carrito'])) {
+
                 $producto = [
                     'id' => $data['id'],
                     'nombre' => $data['nombre'],
                     'imagen' => $data['imagen'],
-                    'cantidad' => $data['cantidad'],
+                    'cantidad' => $cantidad,
                     'precio_venta' => $data['precio_venta']
                 ];
-                $_SESSION['carrito'][$numero_productos] = $producto;
+
+                $_SESSION['carrito'][0] = $producto;
 
                 $response = [
                     'status' => 'success',
                     'message' => 'Producto agregado al carrito',
                     'carrito' => $_SESSION['carrito']
                 ];
+
+            } else {
+                //Si ya se  ha creado la session 'carrito':
+                //Buscamos que el id del producto entrante no exista
+
+                $ids_productos = array_column($_SESSION['carrito'], 'id');
+
+                if (in_array($data['id'], $ids_productos)) {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'El producto ya existe en el carrito'
+                    ];
+
+                } else {
+                    //Si no existe, lo agrega
+
+                    $numero_productos = count($_SESSION['carrito']);
+                    $producto = [
+                        'id' => $data['id'],
+                        'nombre' => $data['nombre'],
+                        'imagen' => $data['imagen'],
+                        'cantidad' => $cantidad,
+                        'precio_venta' => $data['precio_venta']
+                    ];
+                    $_SESSION['carrito'][$numero_productos] = $producto;
+
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Producto agregado al carrito',
+                        'carrito' => $_SESSION['carrito']
+                    ];
+                }
             }
         }
 
         return $response;
     }
+
+
+
 
     public function leer_carrito()
     {
@@ -89,10 +127,14 @@ class CarritoController
     }
 
 
-    public function borrar_producto(string $id)
-    {
+    public function borrar_producto(string $id){
+
 
         $response = [];
+
+
+        $id = MainModel::limpiar_cadena($id);
+        $id = (int) $id;
 
         foreach ($_SESSION['carrito'] as $index => $producto) {
 
@@ -121,13 +163,13 @@ class CarritoController
     }
 
 
-    public function check_carrito(){
+    public function check_carrito()
+    {
         $response = [];
-        if(empty($_SESSION['carrito'])){
-             $response = ['status'=>'success','message'=>'El carrito esta vacio', 'empty'=>true];
-             }else{
-            $response = ['status'=>'success','message'=>'El carrito tienen productos', 'empty'=>false];
-
+        if (empty($_SESSION['carrito'])) {
+            $response = ['status' => 'success', 'message' => 'El carrito esta vacio', 'empty' => true];
+        } else {
+            $response = ['status' => 'success', 'message' => 'El carrito tienen productos', 'empty' => false];
         }
         return $response;
     }

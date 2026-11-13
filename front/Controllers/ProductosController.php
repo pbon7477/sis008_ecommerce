@@ -71,10 +71,7 @@ class ProductosController  extends ProductosModel
                                        
 
                                         <a href='#' class='btn btn-xs btn-outline-dark small mt-0 mt-md-0 mt-lg-0 mt-xl-1 ' id='btnAgregarAlCarritoFront'  
-                                            data-id='" . $prod['id'] . "'
-                                            data-nombre='" . $prod['nombre'] . "'
-                                            data-imagen='" . $prod['imagen'] . "'
-                                            data-precio-venta='" . $prod['precio_venta'] . "'                                         
+                                            data-id='" . $prod['id'] . "'                                         
 
 
 
@@ -190,16 +187,13 @@ class ProductosController  extends ProductosModel
                                         </a>
 
                                     <div class='card-body'>
-                                        <h6 class=''>" . ucfirst($prod['nombre']) . "</h6>
+                                        <h6 class='product_name'>" . ucfirst($prod['nombre']) . "</h6>
                                         <p class='card-text'>Precio: <b>$" . $prod['precio_venta'] . "</b></p>                      
                                         
                                         
                                        
                                         <a href='#' class='btn btn-xs btn-outline-dark small mt-0 mt-md-0 mt-lg-0 mt-xl-1 ' id='btnAgregarAlCarritoFront'  
-                                            data-id='" . $prod['id'] . "'
-                                            data-nombre='" . $prod['nombre'] . "'
-                                            data-imagen='" . $prod['imagen'] . "'
-                                            data-precio-venta='" . $prod['precio_venta'] . "'                                         
+                                            data-id='" . $prod['id'] . "'                                       
 
 
 
@@ -306,16 +300,13 @@ class ProductosController  extends ProductosModel
                                         </a>
 
                                     <div class='card-body'>
-                                        <h6 class=''>" . ucfirst($prod['nombre']) . "</h6>
+                                        <h6 class='product_name'>" . ucfirst($prod['nombre']) . "</h6>
                                         <p class='card-text'>Precio: <b>$" . $prod['precio_venta'] . "</b></p>                      
                                         
                                     
 
                                         <a href='#' class='btn btn-xs btn-outline-dark small mt-0 mt-md-0 mt-lg-0 mt-xl-1 ' id='btnAgregarAlCarritoFront'  
-                                            data-id='" . $prod['id'] . "'
-                                            data-nombre='" . $prod['nombre'] . "'
-                                            data-imagen='" . $prod['imagen'] . "'
-                                            data-precio-venta='" . $prod['precio_venta'] . "'                                         
+                                            data-id='" . $prod['id'] . "'                                     
 
 
 
@@ -366,9 +357,7 @@ class ProductosController  extends ProductosModel
     {
         $id = MainModel::limpiar_cadena($_GET['id']);
 
-        $sql = "SELECT * FROM productos WHERE id='$id';";
-        $respuesta = ProductosModel::ejecutar_consulta_simple($sql);
-        $producto = $respuesta->fetCh(PDO::FETCH_ASSOC);
+        $producto = ProductosModel::get_producto($id);
         return $producto;
     }
 

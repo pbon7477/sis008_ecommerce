@@ -4,8 +4,8 @@ if (!isset($peticion_ajax)) {
     $peticion_ajax = false;
 }
 
-define( 'SERVER_URL', 'http://localhost/sis006/' );
-define( 'COMPANY', 'sis006 MyEcommerce' );
+define( 'SERVER_URL', 'http://localhost/sis008/' );
+define( 'COMPANY', 'sis008 MyEcommerce' );
 
 define('MONEDA','$');
 

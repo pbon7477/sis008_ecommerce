@@ -18,7 +18,7 @@
           <form id="form_login" method="post">
 
             <div class="input-group mb-3">
-              <input type="email" class="form-control" id="email" placeholder="Email">
+              <input type="email" class="form-control" id="email" placeholder="Email"  value="andres@sis.com">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -28,7 +28,7 @@
 
 
             <div class="input-group mb-3">
-              <input type="password" class="form-control" pattern="[a-zA-Z0-9\$\@\.\-]{7,100}" id="password" placeholder="Password" value="">
+              <input type="password" class="form-control" pattern="[a-zA-Z0-9\$\@\.\-]{7,100}" id="password" placeholder="Password" value="123456789">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>

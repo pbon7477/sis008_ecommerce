@@ -1,14 +1,11 @@
 let btnsAgregarAlCarritoFront = document.querySelectorAll(
-  "#btnAgregarAlCarritoFront",
+  "#btnAgregarAlCarritoFront"
 );
 
 btnsAgregarAlCarritoFront.forEach((el) => {
   el.addEventListener("click", (e) => {
     let producto = {
-      id: e.target.getAttribute("data-id"),
-      nombre: e.target.getAttribute("data-nombre"),
-      imagen: e.target.getAttribute("data-imagen"),
-      precio_venta: e.target.getAttribute("data-precio-venta"),
+      id: e.target.getAttribute("data-id"),      
       cantidad: 1,
       action: "agregar-producto",
     };
@@ -22,8 +19,15 @@ btnsAgregarAlCarritoFront.forEach((el) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        //console.log(res);
-        window.location.reload();
+        if(res.status == 'success'){
+          console.log(res);
+          window.location.reload();
+        }
+
+        if(res.status == 'error'){
+          window.location.reload();
+        }
+
       });
   });
 });
