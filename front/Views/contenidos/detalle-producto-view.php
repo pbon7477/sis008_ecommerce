@@ -63,11 +63,43 @@ if ($producto === null) {
         </div>
 
 
+        <style>
+          .input-cantidad {
+            width: 80px;
+            height: 50px;
+            margin: 0px 5px 0px 5px;
+            text-align: center;
+            box-sizing: border-box;
+            font-size: 25px;
+            border: 1px solid #9999;
+            border-radius: 4px;
+
+            -moz-appearance: textfield;
+            appearance: textfield;
+
+          }
+
+          .input-cantidad::-webkit-inner-spin-button,
+          .input-cantidad::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          .btn-mas,
+          .btn-menos {
+            width: 50px;
+          }
+        </style>
+
 
         <div class="row">
-          <div class="col-12 mt-3 d-flex">
+          <div class="col-12 mt-3 ">
             <label for="cantidad_producto">Cantidad:</label>
-            <input type="number" class="form-control form-control-sm col-3 col-md-2 ml-2" name="cantidad_producto" id="cantidad_producto" value="1">
+            <div class="d-flex">
+              <button class="btn btn-success btn-menos" id="btn-menos"><i class="fa fa-minus"></i></button>
+              <input type="number" class=" input-cantidad" name="cantidad_producto" id="cantidad_producto" value="1" min="1" required>
+              <button class="btn btn-success btn-mas" id="btn-mas"><i class="fa fa-plus"></i></button>
+            </div>
           </div>
         </div>
 
@@ -133,3 +165,117 @@ if ($producto === null) {
   <!-- /.card-body -->
 </div>
 <!-- /.card -->
+
+<script>
+  let existe = false;
+  let cantidad_producto = document.querySelector('#cantidad_producto');
+  let btnAgregarAlCarrito = document.querySelector('#btnAgregarAlCarrito');
+  let id = "<?= $producto['id']; ?>";
+
+
+
+
+
+
+
+
+  function check_in_carrito() {
+
+
+
+    fetch('./front/ajax/Carrito_ajax.php', {
+        method: 'POST',
+        headers: {
+          'content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: id,
+          action: 'check-in-carrito'
+        })
+
+      })
+      .then(res => res.json())
+      .then(res => {
+
+        if (res.status == 'success') {
+          console.log(res);
+          if (res.existe == true) {
+            cantidad_producto.value = res.cantidad;
+            btnAgregarAlCarrito.classList.add('bg-success');
+            btnAgregarAlCarrito.classList.add('border');
+            btnAgregarAlCarrito.classList.add('border-0');
+            btnAgregarAlCarrito.setAttribute('disabled', true);
+            btnAgregarAlCarrito.innerHTML = `<i class="fa fa-check mr-2"></i> Agregado`;
+
+          }
+        } else {
+          console.log(res.message)
+        }
+      })
+  }
+
+
+
+
+  //btns actualizar cantidad 
+  let btn_mas = document.querySelector('#btn-mas');
+  let btn_menos = document.querySelector('#btn-menos');
+
+  btn_mas.addEventListener('click', () => {
+
+    let nueva_cantidad = (parseInt(cantidad_producto.value));
+    nueva_cantidad++;
+    cantidad_producto.value = nueva_cantidad;
+    actualizar_cantidad(nueva_cantidad);
+
+  })
+
+  btn_menos.addEventListener('click', () => {
+    let nueva_cantidad = (parseInt(cantidad_producto.value)) || 1;
+    if (nueva_cantidad > 1) {
+      nueva_cantidad--;
+    }
+    cantidad_producto.value = nueva_cantidad;
+    actualizar_cantidad(nueva_cantidad);
+  })
+
+
+  //Evento para cuando ingrese manualmente
+  cantidad_producto.addEventListener('change', (e) => {
+    actualizar_cantidad(e.target.value);
+  })
+
+
+  //actualizar cantidad
+
+  function actualizar_cantidad(cantidad) {
+
+    let nueva_cantidad = cantidad;
+
+    fetch('./front/ajax/Carrito_ajax.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'actualizar-cantidad',
+          nueva_cantidad: nueva_cantidad,
+          id: id
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      })
+
+
+
+  }
+
+
+
+
+
+
+  check_in_carrito();
+</script>

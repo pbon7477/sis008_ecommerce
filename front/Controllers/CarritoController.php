@@ -5,7 +5,8 @@ require_once(__DIR__ . '/../Models/CarritoModel.php');
 class CarritoController extends CarritoModel
 {
 
-    public function agregar_producto(array $form_data)    {
+    public function agregar_producto(array $form_data)
+    {
 
         $response = [];
 
@@ -25,10 +26,6 @@ class CarritoController extends CarritoModel
             ];
 
             return $response;
-            
-            
-
-            
         } else {
 
 
@@ -56,7 +53,6 @@ class CarritoController extends CarritoModel
                     'message' => 'Producto agregado al carrito',
                     'carrito' => $_SESSION['carrito']
                 ];
-
             } else {
                 //Si ya se  ha creado la session 'carrito':
                 //Buscamos que el id del producto entrante no exista
@@ -68,7 +64,6 @@ class CarritoController extends CarritoModel
                         'status' => 'error',
                         'message' => 'El producto ya existe en el carrito'
                     ];
-
                 } else {
                     //Si no existe, lo agrega
 
@@ -127,7 +122,8 @@ class CarritoController extends CarritoModel
     }
 
 
-    public function borrar_producto(string $id){
+    public function borrar_producto(string $id)
+    {
 
 
         $response = [];
@@ -172,5 +168,81 @@ class CarritoController extends CarritoModel
             $response = ['status' => 'success', 'message' => 'El carrito tienen productos', 'empty' => false];
         }
         return $response;
+    }
+
+
+
+
+
+    public function check_in_carrito(int $id)
+    {
+
+        $id = MainModel::limpiar_cadena($id);
+
+        $response = [];
+
+        if (!is_numeric($id) && $id < 0) {
+            $response = ['status' => 'error', 'message' => 'El id recibido no es un numero'];
+        }  
+        
+        if(isset($_SESSION['carrito'])){
+
+
+            foreach ($_SESSION['carrito'] as $producto) {
+
+                if ( $producto['id'] == $id) {
+                    $response = ['status' => 'success', 'message' => 'El producto ya fue agregado al carrito', 'existe' => true, 'cantidad'=>$producto['cantidad']];
+                    break;
+                } else {
+                    $response = ['status' => 'success', 'message' => 'El producto no ha sido agregado al carrito', 'existe' => false];
+                }
+            }
+        }else{
+            $response = ['status'=>'success','message'=>'Aun no se han ingresado productos al carrito'];
+        }
+
+        return $response;
+    }
+
+
+
+
+    public function actualizar_cantidad( array $data){
+        $id = MainModel::limpiar_cadena($data['id']);
+        $cantidad = MainModel::limpiar_cadena($data['nueva_cantidad']);
+
+        $response = ['status'=>'error'];
+
+        if( !is_numeric($id) || $id <= 0 ){
+            $response = ['status'=>'error', 'message'=>'El ID no corresponde'];            
+        }
+            
+        if( !is_numeric($cantidad) || $cantidad <= 0  ){
+            $response = ['status'=>'error', 'message'=>'La cantidad no corresponde'];
+        }
+            
+            foreach($_SESSION['carrito'] as $index=>$producto){
+                
+                if($producto['id'] == $id){
+                    $_SESSION['carrito'][$index]['cantidad'] = $cantidad;
+                    $response = [
+                        'status'=>'success',
+                        'message'=> 'La cantidad del producto '. $producto["nombre"] . ' ha sido actualizada a '. $cantidad .''
+                         ];
+        
+
+                break;
+            }else{
+                $response = ['status'=>'error','No ha sido posible actualizar la cantidad'];
+            }
+        }
+
+
+        return $response;
+
+
+
+
+
     }
 }

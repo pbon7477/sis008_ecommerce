@@ -360,7 +360,8 @@ class ProductosController  extends ProductosModel
         
         if(!is_numeric($id) || $id <= 0 ){
             
-            exit();
+            $producto = null;
+            
         }else{
 
             $producto = ProductosModel::get_producto($id);

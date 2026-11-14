@@ -59,6 +59,18 @@ if (isset($data['action'])) {
         exit();
     }
 
+    if($data['action'] == 'check-in-carrito'){
+        $response = $CarritoController->check_in_carrito( $data['id'] );
+        echo json_encode($response);
+        exit();
+    }
+
+    if($data['action'] == 'actualizar-cantidad'){
+        $response = $CarritoController->actualizar_cantidad($data);
+        echo json_encode($response);
+        exit();
+    }
+
 
 
     $response = [
