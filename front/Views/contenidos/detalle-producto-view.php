@@ -3,6 +3,12 @@ require_once('./front/Controllers/ProductosController.php');
 $ProductoController = new ProductosController();
 $producto = $ProductoController->getProducto();
 
+
+if ($producto === null) {
+  echo "<script>window.location='" . SERVER_URL . "index.php?view=productos';</script>";
+}
+
+
 ?>
 
 <div class="row">
@@ -72,7 +78,7 @@ $producto = $ProductoController->getProducto();
           <div class="col-6">
             <a href="index.php?view=productos" class="btn btn-outline-dark"><i class="fa fa-arrow-circle-left mr-1"></i> Volver a productos</a>
           </div>
-          
+
           <div class="col-6">
             <button class="btn btn-dark btn " id="btnAgregarAlCarrito"
               data-id="<?php echo $producto['id']; ?>"

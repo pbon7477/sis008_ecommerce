@@ -10,7 +10,7 @@ class ProductosController  extends ProductosModel
     public function getAllProductos()
     {
         //Consulta para obtener la cantidad de registros ( filas )
-        $sql = "SELECT * FROM productos";
+        $sql = "SELECT * FROM productos WHERE stock > 0;";
         $resultados = MainModel::ejecutar_consulta_simple($sql);
 
 
@@ -33,7 +33,7 @@ class ProductosController  extends ProductosModel
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
 
         //consulta de los registros
-        $sql = "SELECT * FROM productos LIMIT " . $empezar_desde . "," . $tamagno_paginas . ";";
+        $sql = "SELECT * FROM productos WHERE stock > 0 LIMIT " . $empezar_desde . "," . $tamagno_paginas . ";";
         $query = MainModel::ejecutar_consulta_simple($sql);
         $productos = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -134,7 +134,7 @@ class ProductosController  extends ProductosModel
         $categoria_id = MainModel::limpiar_cadena($_GET['categoria']);
 
         //Consulta para obtener la cantidad de registros ( filas )
-        $sql = "SELECT id FROM productos WHERE categoria_id = '" . $categoria_id . "';";
+        $sql = "SELECT id FROM productos WHERE categoria_id = '" . $categoria_id . "' AND stock > 0;";
         $resultados = MainModel::ejecutar_consulta_simple($sql);
 
 
@@ -157,7 +157,7 @@ class ProductosController  extends ProductosModel
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
 
         //consulta de los registros
-        $sql = "SELECT * FROM productos WHERE categoria_id = '" . $categoria_id . "' LIMIT " . $empezar_desde . "," . $tamagno_paginas . ";";
+        $sql = "SELECT * FROM productos WHERE categoria_id = '" . $categoria_id . "' AND stock > 0 LIMIT " . $empezar_desde . "," . $tamagno_paginas . ";";
         $query = MainModel::ejecutar_consulta_simple($sql);
         $productos = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -245,7 +245,7 @@ class ProductosController  extends ProductosModel
         $buscar = MainModel::limpiar_cadena($_POST['buscar']);
 
         //Consulta para obtener la cantidad de registros ( filas )
-        $sql = "SELECT id FROM productos WHERE nombre LIKE '%" . $buscar . "%';";
+        $sql = "SELECT id FROM productos WHERE nombre AND stock > 0 LIKE '%" . $buscar . "%';";
         $resultados = MainModel::ejecutar_consulta_simple($sql);
 
 
@@ -268,7 +268,7 @@ class ProductosController  extends ProductosModel
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
 
         //consulta de los registros
-        $sql = "SELECT * FROM productos WHERE nombre LIKE '%" . $buscar . "%' 
+        $sql = "SELECT * FROM productos WHERE nombre LIKE '%" . $buscar . "%' AND stock > 0 
                 LIMIT " . $empezar_desde . "," . $tamagno_paginas . ";";
 
         $query = MainModel::ejecutar_consulta_simple($sql);
@@ -353,11 +353,20 @@ class ProductosController  extends ProductosModel
     }
 
 
-    public function getProducto()
-    {
-        $id = MainModel::limpiar_cadena($_GET['id']);
+    public function getProducto()    {
+        $producto=null;
 
-        $producto = ProductosModel::get_producto($id);
+        $id = MainModel::limpiar_cadena($_GET['id']);
+        
+        if(!is_numeric($id) || $id <= 0 ){
+            
+            exit();
+        }else{
+
+            $producto = ProductosModel::get_producto($id);
+        } 
+            
+
         return $producto;
     }
 
