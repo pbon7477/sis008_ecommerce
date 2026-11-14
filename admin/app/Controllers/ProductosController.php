@@ -37,6 +37,7 @@ class ProductosController extends ProductosModel {
         
     }
 
+
     public function create_producto(){
             
         $nombre = MainModel::limpiar_cadena($_POST['nombre']);
@@ -395,9 +396,9 @@ class ProductosController extends ProductosModel {
         $categoria_id = MainModel::limpiar_cadena($_POST['categoria_id']);
 
         $descripcion = MainModel::limpiar_cadena($_POST['descripcion']);
-        $codigo = MainModel::limpiar_cadena($_POST['codigo']);
+        //$codigo = MainModel::limpiar_cadena($_POST['codigo']);
 
-        $fecha_ingreso = MainModel::limpiar_cadena($_POST['fecha_ingreso']);
+        //$fecha_ingreso = MainModel::limpiar_cadena($_POST['fecha_ingreso']);
 
         $usuario_id = MainModel::limpiar_cadena($_POST['usuario_id']);
 
@@ -443,7 +444,7 @@ class ProductosController extends ProductosModel {
 
 
         //VALIDAMOS QUE LOS CAMPOS TRAIGAN ALGO
-        if( $nombre == '' || $categoria_id == '' || $descripcion == '' || $codigo == '' || $fecha_ingreso == '' ||
+        if( $nombre == '' || $categoria_id == '' || $descripcion == '' || 
             $precio_compra == '' || $precio_venta == '' ||
             $stock  == '' || $stock_minimo == '' || $stock_maximo == '' ){
             $alerta = [
@@ -455,6 +456,30 @@ class ProductosController extends ProductosModel {
 
             return json_encode($alerta);
         }
+
+        //VALIDAMOS QUE SI SE HAYA MODIFICADO ALGO
+        if( $nombre == $producto_existe['nombre'] && 
+            $categoria_id == $producto_existe['categoria_id'] &&
+            $descripcion == $producto_existe['descripcion'] &&
+            $precio_compra == $producto_existe['precio_compra'] &&
+            $precio_venta == $producto_existe['precio_venta'] &&
+            $stock == $producto_existe['stock'] &&
+            $stock_minimo == $producto_existe['stock_minimo'] &&
+            $stock_maximo == $producto_existe['stock_maximo'] &&
+            $_FILES['imagen']['name'] == '' && $_FILES['imagen']['size'] == 0
+            
+
+            ){
+                $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado.",
+                "Texto" => "Debe actualizar algun valor para realizar la actualización del producto.",
+                "Tipo" => "error"
+            ];
+
+            return json_encode($alerta);
+
+            }
 
 
         //VALIDAMOS EL NOMBRE
@@ -526,23 +551,10 @@ class ProductosController extends ProductosModel {
         //VERIFICAMOS EL CODIGO
         //...
 
-        //VERIFICAMOS LA FECHA Y HORA DE REGISTRO
-        if( $fecha_ingreso != $producto_existe['fecha_ingreso'] ){
-
-                $date_time = DateTime::createFromFormat('Y-m-d\TH:i', $fecha_ingreso);
-
-                if(!$date_time || $date_time->format('Y-m-d\TH:i') !== $fecha_ingreso){
-                    $alerta = [
-                        'Alerta' => 'simple',
-                        'Titulo' => 'Ocurrió un error inesperado.',
-                        'Texto' => 'La <b>Fecha de ingreso </b> no coincide con el formato solicitado.',
-                        'Tipo' => 'error'
-                    ];
-                    return json_encode($alerta);                
-                }
-        }else{
+        // LA FECHA DE INGRESO NO SE MODIFICA 
+        
             $fecha_ingreso = $producto_existe['fecha_ingreso'];
-        }
+        
 
 
         //VERIFICAMOS QUE EL USUARIO EXISTA
@@ -823,8 +835,7 @@ class ProductosController extends ProductosModel {
             'nombre' => $nombre,
             'categoria_id' => $categoria_id,
             'descripcion' => $descripcion,
-            'codigo' => $codigo,
-            'fecha_ingreso' => $fecha_ingreso,
+
             'usuario_id' => $usuario_id,
             'precio_compra' => $precio_compra,
             'precio_venta' => $precio_venta,

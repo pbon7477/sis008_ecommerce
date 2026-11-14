@@ -99,13 +99,11 @@
           
         }
 
-        protected static function update( $datos ){
+        protected static function update(array $datos ){
             $sql = "UPDATE productos SET 
                     nombre = :nombre,
                     categoria_id = :categoria_id,
-                    descripcion = :descripcion,
-                    codigo = :codigo,
-                    fecha_ingreso = :fecha_ingreso,
+                    descripcion = :descripcion,                               
                     usuario_id = :usuario_id,
                     precio_compra = :precio_compra,
                     precio_venta = :precio_venta,
@@ -120,8 +118,8 @@
             $sentencia->bindParam(':nombre', $datos['nombre']);        
             $sentencia->bindParam(':categoria_id', $datos['categoria_id']);        
             $sentencia->bindParam(':descripcion', $datos['descripcion']);     
-            $sentencia->bindParam(':codigo', $datos['codigo']);     
-            $sentencia->bindParam(':fecha_ingreso', $datos['fecha_ingreso']);     
+              
+              
             $sentencia->bindParam(':usuario_id', $datos['usuario_id']);     
             $sentencia->bindParam(':precio_compra', $datos['precio_compra']);     
             $sentencia->bindParam(':precio_venta', $datos['precio_venta']);     

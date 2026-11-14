@@ -135,7 +135,7 @@ $categorias = $CategoriasController->all_categories();
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="fecha_ingreso">Fecha de ingreso:</label>
-                    <input type="datetime-local" class="form-control form-control-sm" name="fecha_ingreso" id="fecha_ingreso" value="<?= $producto['fecha_ingreso']; ?>" required>
+                    <input type="datetime-local" class="form-control form-control-sm" name="fecha_ingreso" id="fecha_ingreso" value="<?= $producto['fecha_ingreso']; ?>" required disabled >
                   </div>
                 </div>
 
